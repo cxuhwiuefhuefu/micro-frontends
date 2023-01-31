@@ -2,7 +2,7 @@
  * @Author: Sunny
  * @Date: 2023-01-27 22:53:04
  * @LastEditors: Suuny
- * @LastEditTime: 2023-01-29 18:04:31
+ * @LastEditTime: 2023-01-31 15:20:26
  * @Description: 
  * @FilePath: \micro-frontends\main\src\micro-fe\import-html.js
  */
@@ -21,13 +21,27 @@ export const importHTML = async (url) => {
   const scripts = template.querySelector('script')
 
   // 获取所有 script 标签的代码：[代码, 代码]
-  async function getExternalScripts() {
+  function getExternalScripts() {
     console.log(scripts)
+    return Promise.all(Array.from(scripts).map(script => {·
+      const src = script.getAttribute('src')
+      if(!src) {
+        return Promise.resolve(script.innerHTML)
+      } else {
+        return fetchRource(
+          src.startWidth('http') ? src : `${url}${src}`
+        )
+      }
+    }))
   }
 
   // 获取并执行所有的 script 脚本代码
-  function execScripts() {
-
+  async function execScripts() {
+    const scripts = await getExternalScripts()
+    console.log(scripts);
+    scripts.forEach(code => {
+      eval(code);
+    })
   }
   
   return {

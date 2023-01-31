@@ -52,9 +52,15 @@ export const handleRouter =  async () => {
   const container = document.querySelector(template);
   container.appendChild(template)
 
-  getExternalScripts().then(() => {
-    
-  })
+  // getExternalScripts().then((scripts) => {
+  //   console.log(scripts);
+  // })
+
+
+  // 配置全局环境变量 由主应用控制生命周期去处理
+  window.__POWER_BY_QIANKUN__ = true
+
+  execScripts()
     
 
    

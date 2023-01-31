@@ -18,6 +18,7 @@ module.exports = {
     },
   },
   configureWebpack: {
+    mode: "development",
     output: {
       // 子应用必须打包出一个库文件
       library: name, // 最终导出到全局变量的名称叫什么 
